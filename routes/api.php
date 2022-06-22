@@ -24,11 +24,12 @@ Route::group([
     Route::post('/logout', [AuthController::class, 'logout']);
     Route::post('/refresh', [AuthController::class, 'refresh']);
     Route::get('/user-profile', [AuthController::class, 'userProfile']);
-    Route::post('/post', [PostController::class, 'getPosts']);
 });
 
 Route::group([
     'middleware' => 'api'
 ], function ($router) {
-    Route::post('/post', [PostController::class, 'getPosts']);
+    Route::get('/post', [PostController::class, 'getPosts']);
+    Route::post('/post/add', [PostController::class, 'addPost']);
+    Route::delete('/post', [PostController::class, 'deletePost']);
 });

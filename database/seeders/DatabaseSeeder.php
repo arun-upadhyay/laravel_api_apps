@@ -23,12 +23,11 @@ class DatabaseSeeder extends Seeder
 
             ]);
         }
-        for ($index = 0; $index < 100; $index++) {
-            DB::table('users')->insert([
-                'name' => Str::random(10),
-                'email' => Str::random(10) . '@gmail.com',
-                'password' => Hash::make('password'),
-            ]);
-        }
+        DB::table('users')->insert([
+            'name' => "admin",
+            'username' => "admin",
+            'email' => "admin@gmail.com",
+            'password' => Hash::make('admin'),
+        ]);
     }
 }

@@ -25,6 +25,22 @@ class PostController extends Controller
         return Post::all();
     }
 
+    public function editPost(Request $request)
+    {
+        $id = $request->id;
+        $post = Post::find($id);
+        if ($post instanceof Post) {
+            $post->title = $request->title;
+            $post->description = $request->description;
+            $post->save();
+            return response()->json(['success' => true, 'last_id_saved' => $post->id], 200);
+        } else {
+            return response()->json(['success' => false, 'message' => "database record not found"], 4500);
+        }
+
+        return response()->json(['success' => false, 'message' => "Error in DB Operation"], 500);
+    }
+
     public function addPost(Request $request)
     {
         $post = new Post();

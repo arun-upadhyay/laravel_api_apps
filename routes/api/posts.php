@@ -8,6 +8,7 @@ Route::group([
     'middleware' => 'api'
 ], function ($router) {
     Route::get('/post', [PostController::class, 'getPosts']);
-    Route::post('/post/add', [PostController::class, 'addPost']);
+    Route::post('/post', [PostController::class, 'addPost']);
+    Route::put('/post', [PostController::class, 'editPost']);
     Route::delete('/post', [PostController::class, 'deletePost']);
 });

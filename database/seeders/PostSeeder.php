@@ -2,13 +2,15 @@
 
 namespace Database\Seeders;
 
-use Faker\Factory;
+use App\Models\Post;
+
+use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 
 class PostSeeder extends Seeder
 {
+    use TruncateTable;
+
     /**
      * Run the database seeds.
      *
@@ -16,10 +18,6 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Factory::create();
-        DB::table('posts')->insert([
-            'title' => $faker->title,
-            'description' => $faker->paragraph,
-        ]);
+        Post::factory(10)->create();
     }
 }

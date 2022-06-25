@@ -2,13 +2,13 @@
 
 namespace Database\Seeders;
 
+use Database\Seeders\Traits\TruncateTable;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Str;
 
 class DatabaseSeeder extends Seeder
 {
+    use TruncateTable;
+
     /**
      * Seed the application's database.
      *
@@ -16,18 +16,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        for ($index = 0; $index < 100; $index++) {
-            DB::table('posts')->insert([
-                'title' => Str::random(10),
-                'description' => Str::random(100),
-
-            ]);
-        }
-        DB::table('users')->insert([
-            'name' => "admin",
-            'username' => "admin",
-            'email' => "admin@gmail.com",
-            'password' => Hash::make('admin'),
+        $this->truncate('Users');
+        $this->truncate('Posts');
+        $this->call([
+            UserSeeder::class,
+            PostSeeder::class
         ]);
     }
 }

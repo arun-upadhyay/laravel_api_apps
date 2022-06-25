@@ -3,9 +3,11 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use Faker\Provider\Address;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Faker\Factory;
 
 class UserSeeder extends Seeder
 {
@@ -16,11 +18,12 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Factory::create();
         DB::table('users')->insert([
-            'name' => "admin",
-            'username' => "admin",
-            'email' => "admin@gmail.com",
-            'password' => Hash::make('admin'),
+            'name' => $faker->name,
+            'username' => $faker->userName,
+            'email' => $faker->email,
+            'password' => Hash::make($faker->password),
         ]);
     }
 }

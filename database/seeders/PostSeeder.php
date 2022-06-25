@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use Faker\Factory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
@@ -15,10 +16,10 @@ class PostSeeder extends Seeder
      */
     public function run()
     {
+        $faker = Factory::create();
         DB::table('posts')->insert([
-            'title' => Str::random(10),
-            'description' => Str::random(100),
-
+            'title' => $faker->title,
+            'description' => $faker->paragraph,
         ]);
     }
 }

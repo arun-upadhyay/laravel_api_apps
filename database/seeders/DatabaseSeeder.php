@@ -16,8 +16,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->truncate('Users');
-        $this->truncate('Posts');
+
         $this->call([
             UserSeeder::class,
             PostSeeder::class

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use App\Models\PostUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -20,12 +21,14 @@ class PostController extends Controller
         $this->user = JWTAuth::parseToken()->authenticate();
     }
 
-    public function getPosts()
+
+    public function get()
     {
-        return Post::all();
+        return Post::query()->paginate(5);
+
     }
 
-    public function editPost(Request $request)
+    public function update(Request $request)
     {
         $id = $request->id;
         $post = Post::find($id);
@@ -37,25 +40,35 @@ class PostController extends Controller
         } else {
             return response()->json(['success' => false, 'message' => "database record not found"], 4500);
         }
-
         return response()->json(['success' => false, 'message' => "Error in DB Operation"], 500);
     }
 
-    public function addPost(Request $request)
+    public function create(Request $request)
     {
+
+        $user_id = $request->user_id;
+        if (!User::find($user_id)) {
+            return response()->json(['success' => 0, 'message' => "User with ID{$user_id} is not found"], 500);
+        }
         $post = new Post();
         $post->title = $request->title;
-        $post->description = $request->description;
+        $post->body = json_encode($request->body);
         $post->created_at = now();
         $post->updated_at = now();
+
         if ($post->save()) {
+            $postUser = new PostUser();
+            $postUser->post_id = $post->id;
+            $postUser->user_id = $user_id;
+            $postUser->save();
             return response()->json(['success' => true, 'last_insert_id' => $post->id], 200);
         } else {
             return response()->json(['success' => 0, 'message' => "Error in DB Operation"], 500);
         }
+
     }
 
-    public function deletePost(Request $request)
+    public function delete(Request $request)
     {
         $id = $request->id;
         $post = Post::find($id); //primary id

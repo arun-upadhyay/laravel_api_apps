@@ -16,7 +16,6 @@ class PostFactory extends Factory
     {
         return [
             'title' => $this->faker->word,
-            'user_id' => 1,
             'body' => json_encode(['abc']),
         ];
     }

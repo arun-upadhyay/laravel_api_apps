@@ -2,6 +2,7 @@
 
 namespace App\Repositories;
 
+use App\Events\Post\PostCreateEvent;
 use App\Models\Post;
 use App\Models\PostUser;
 use App\Models\User;
@@ -26,7 +27,7 @@ class PostRepository extends BaseRepository
             $postUser->post_id = $post->id;
             $postUser->user_id = $user_id;
             $postUser->save();
-
+            event(new PostCreateEvent($post));
             return response()->json(['success' => true, 'last_insert_id' => $post->id], 200);
         } else {
             return response()->json(['success' => 0, 'message' => "Error in DB Operation"], 500);

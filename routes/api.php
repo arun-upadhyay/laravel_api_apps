@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
@@ -17,3 +18,7 @@ use \App\Http\Controllers\PostController;
 */
 require_once('api\users.php');
 require_once('api\posts.php');
+
+Route::get('/async', function () {
+    return "nice";
+});

@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
+use Illuminate\Support\Facades\Http;
 
 class callAPI extends Command
 {
@@ -11,7 +12,7 @@ class callAPI extends Command
      *
      * @var string
      */
-    protected $signature = 'command:name';
+    protected $signature = 'command:async_calls';
 
     /**
      * The console command description.
@@ -37,8 +38,14 @@ class callAPI extends Command
      */
     public function handle()
     {
+        Http::async()->get("http://127.0.0.1:8000/api/async")->then(function ($response) {
+            $path = base_path() . '/logger/async_logs.txt';
+            if (file_exists($path)) {
+                file_put_contents($path, $response->body());
+            }
+        });
 
-        var_dump("hello world");
+        echo "Async call has been executed";
         return 0;
     }
 }

@@ -15,9 +15,9 @@ class PostUser extends Migration
     {
         Schema::create('post_user', function (Blueprint $table) {
             $table->foreignId('user_id')->index();
-            $table->foreign('user_id')->on('users')->references('id')->cascadeOnDelete();
+            $table->foreign('user_id')->on('users')->references('id');
             $table->foreignId('post_id')->index();
-            $table->foreign('post_id')->on('posts')->references('id')->cascadeOnDelete();
+            $table->foreign('post_id')->on('posts')->references('id');
             $table->primary(['post_id', 'user_id']);
             $table->timestamps();
         });

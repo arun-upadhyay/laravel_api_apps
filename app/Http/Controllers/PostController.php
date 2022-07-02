@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use App\Models\PostUser;
+use App\Repositories\PostRepository;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
@@ -21,61 +22,33 @@ class PostController extends Controller
         $this->user = JWTAuth::parseToken()->authenticate();
     }
 
-
     public function get()
     {
         return Post::query()->paginate(5);
-
     }
 
-    public function update(Request $request)
+    public function update(Request $request, PostRepository $repository)
     {
-        $id = $request->id;
-        $post = Post::find($id);
-        if ($post instanceof Post) {
-            $post->title = $request->title;
-            $post->description = $request->description;
-            $post->save();
-            return response()->json(['success' => true, 'last_id_saved' => $post->id], 200);
-        } else {
-            return response()->json(['success' => false, 'message' => "database record not found"], 4500);
-        }
-        return response()->json(['success' => false, 'message' => "Error in DB Operation"], 500);
+        return $repository->update($request->only([
+            'id',
+            'title',
+            'body'
+        ]));
     }
 
-    public function create(Request $request)
+    public function create(Request $request, PostRepository $repository)
     {
-
-        $user_id = $request->user_id;
-        if (!User::find($user_id)) {
-            return response()->json(['success' => 0, 'message' => "User with ID{$user_id} is not found"], 500);
-        }
-        $post = new Post();
-        $post->title = $request->title;
-        $post->body = json_encode($request->body);
-        $post->created_at = now();
-        $post->updated_at = now();
-
-        if ($post->save()) {
-            $postUser = new PostUser();
-            $postUser->post_id = $post->id;
-            $postUser->user_id = $user_id;
-            $postUser->save();
-            return response()->json(['success' => true, 'last_insert_id' => $post->id], 200);
-        } else {
-            return response()->json(['success' => 0, 'message' => "Error in DB Operation"], 500);
-        }
-
+        return $repository->create($request->only([
+            'user_id',
+            'title',
+            'body'
+        ]));
     }
 
-    public function delete(Request $request)
+    public function delete(Request $request, PostRepository $repository)
     {
-        $id = $request->id;
-        $post = Post::find($id); //primary id
-        if ($post instanceof Post && $post->delete()) {
-            return response()->json(['success' => true, 'last_deleted_id' => $id], 200);
-        } else {
-            return response()->json(['success' => false, 'message' => "{$id} is not found"], 200);
-        }
+
+        return $repository->delete($request->only(['id']));
+
     }
 }

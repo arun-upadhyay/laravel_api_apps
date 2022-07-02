@@ -15,5 +15,7 @@ class PostUser extends Model
         'user_id',
         'post_id',
     ];
+    private $post_id;
+    private $user_id;
 
 }

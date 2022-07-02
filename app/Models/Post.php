@@ -13,5 +13,18 @@ class Post extends Model
         'title',
         'description',
     ];
+    private $title;
+    /**
+     * @var false|string
+     */
+    private $body;
+    /**
+     * @var \Illuminate\Support\Carbon
+     */
+    private $created_at;
+    /**
+     * @var \Illuminate\Support\Carbon
+     */
+    private $updated_at;
 
 }

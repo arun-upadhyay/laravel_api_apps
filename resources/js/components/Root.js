@@ -1,10 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import AllPost from "./AllPost";
 
 function Root() {
     return (
         <div>
-            <h1> Welcome to React Component</h1>
+            <h1> Welcome </h1>
+            <AllPost></AllPost>
         </div>
     );
 }

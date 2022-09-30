@@ -4,24 +4,15 @@ import {useNavigate} from "react-router-dom";
 export default class Home extends React.Component {
 
 
-    async handleSubmit(event) {
-        event.preventDefault();
-        await submitForm(event.target);
-        navigate("../login", {replace: true});
-        // replace: true will replace the current entry in
-        // the history stack instead of adding a new one.
-
-    }
-
-
     handleSubmit(event) {
-
+        const navigate = useNavigate();
+        navigate("layout", {replace: true});
     }
 
     render() {
         return (<div>
-            <h1>Home Page</h1>
-            <button onClick={handleSubmit}>Click Me</button>
+            <h1>I am on home page Home Page</h1>
+            <button onClick={this.handleSubmit.bind()}>Click Me</button>
         </div>);
     }
 }

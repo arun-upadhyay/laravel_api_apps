@@ -12,10 +12,20 @@ use Illuminate\Support\Facades\Route;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::view('/{path?}', 'app')
+    ->where('path', '.*');
+//
+//Route::get('/', function () {
+//    return view('app');
+//});
+//
+//Route::get('/home', function () {
+//    return view('app');
+//});
+//
+//Route::get('/contactus', function () {
+//    return view('welcome');
+//});
 
 Auth::routes();
 

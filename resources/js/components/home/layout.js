@@ -3,7 +3,8 @@ import * as React from "react";
 export default class Layout extends React.Component {
     render() {
         return (
-            <div>
+            <>
+                <h1>I am on layout page</h1>
                 <nav className="navbar navbar-expand-lg navbar-light bg-light">
                     <a className="navbar-brand" href="#">Navbar</a>
                     <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,7 +40,7 @@ export default class Layout extends React.Component {
                         </form>
                     </div>
                 </nav>
-            </div>
+            </>
 
         );
     }

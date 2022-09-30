@@ -13,6 +13,8 @@ import {
 import Home from "./home/home";
 import Login from "./home/login";
 import Layout from "./home/layout";
+import Header from "./home/header";
+import Contact from "./contactus";
 
 
 /**
@@ -25,13 +27,14 @@ function Root() {
     return (
 
         <div className="container">
+            <Header/>
             <Provider store={store}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="login" element={<Login/>}/>
                         <Route path="layout" element={<Layout/>}/>
-                        <Route path="test" element={<Home/>}/>
+                        <Route exact path="contactus" element={<Contact/>}/>
                     </Routes>
                 </BrowserRouter>
 

@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import AllPost from "./AllPost";
+
 import {createStore} from "redux";
 import LoginReducer from "../reducers/LoginReducer";
 import {Provider} from 'react-redux';
@@ -12,6 +12,8 @@ import {
 
 import Home from "./home/home";
 import Login from "./home/login";
+import Layout from "./home/layout";
+
 
 /**
  * Redux store created
@@ -22,12 +24,14 @@ const store = createStore(LoginReducer);
 function Root() {
     return (
 
-        <div>
+        <div className="container">
             <Provider store={store}>
                 <BrowserRouter>
                     <Routes>
                         <Route path="/" element={<Home/>}/>
                         <Route path="login" element={<Login/>}/>
+                        <Route path="layout" element={<Layout/>}/>
+                        <Route path="test" element={<Home/>}/>
                     </Routes>
                 </BrowserRouter>
 

@@ -8641,6 +8641,8 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
+
 var Home = /*#__PURE__*/function (_React$Component) {
   _inherits(Home, _React$Component);
 
@@ -8653,12 +8655,18 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Home, [{
+    key: "handleSubmit",
+    value: function handleSubmit(event) {}
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+        children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
           children: "Home Page"
-        })
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("button", {
+          onClick: handleSubmit,
+          children: "Click Me"
+        })]
       });
     }
   }]);

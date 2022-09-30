@@ -15,6 +15,7 @@ import Login from "./home/login";
 import Layout from "./home/layout";
 import Header from "./home/header";
 import Contact from "./contactus";
+import Aboutus from "./aboutus";
 
 
 /**
@@ -28,17 +29,17 @@ function Root() {
 
         <div className="container">
             <Header/>
-            <Provider store={store}>
-                <BrowserRouter>
-                    <Routes>
-                        <Route path="/" element={<Home/>}/>
-                        <Route path="login" element={<Login/>}/>
-                        <Route path="layout" element={<Layout/>}/>
-                        <Route exact path="contactus" element={<Contact/>}/>
-                    </Routes>
-                </BrowserRouter>
+            {/*<Provider store={store}>*/}
+            <BrowserRouter>
+            
+                <Routes>
+                    <Route path="/" element={<Home/>}/>
+                    <Route path="/aboutus" element={<Aboutus/>}/>
+                    <Route path="/contactus" element={<Contact/>}/>
+                </Routes>
+            </BrowserRouter>
 
-            </Provider>
+            {/*</Provider>*/}
 
         </div>
     );

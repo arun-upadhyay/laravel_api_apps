@@ -9150,20 +9150,17 @@ var Register = /*#__PURE__*/function (_React$Component) {
         body: data,
         redirect: 'follow'
       }).then(function (response) {
-        return response.text();
-      }).then(function (result) {
-        // register an event to be redirected
-        _this2.setState({
-          isRegister: 1
-        });
+        console.log("status" + response.status);
 
-        console.log(result);
+        if (response.status == 200) {
+          _this2.setState({
+            isRegister: 1
+          });
+        }
+
+        console.dir("text" + response.json());
       })["catch"](function (error) {
         return console.log('error', error);
-      });
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Navigate, {
-        replace: true,
-        to: "/login"
       });
     }
   }, {

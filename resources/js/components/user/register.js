@@ -38,15 +38,17 @@ export default class Register extends React.Component {
             body: data,
             redirect: 'follow'
         })
-            .then(response => response.text())
-            .then(result => {
-                // register an event to be redirected
-                this.setState({isRegister: 1})
-                console.log(result);
+            .then((response) => {
+                console.log("status" + response.status);
+                if (response.status == 200) {
+                    this.setState({
+                        isRegister: 1
+                    })
+                }
+                console.dir("text" + response.json());
             })
             .catch(error => console.log('error', error));
 
-        return <Navigate replace to="/login"/>;
     }
 
     handleInputChange(event) {

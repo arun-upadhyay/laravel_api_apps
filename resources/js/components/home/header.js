@@ -6,14 +6,14 @@ export default class Header extends React.Component {
     render() {
         return (
             <div>
-                <BrowserRouter>
+
                     <div>
                         <ul>
                             <li>
                                 <Link to="/">Home</Link>
                             </li>
                             <li>
-                                <Link to="/layout">About us</Link>
+                                <Link to="/aboutus">About us</Link>
                             </li>
                             <li>
                                 <Link to="/contactus">Contact us</Link>
@@ -21,7 +21,7 @@ export default class Header extends React.Component {
                         </ul>
 
                     </div>
-                </ BrowserRouter>
+
 
             </div>
         );

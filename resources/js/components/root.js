@@ -28,10 +28,10 @@ function Root() {
     return (
 
         <div className="container">
-            <Header/>
+
             {/*<Provider store={store}>*/}
             <BrowserRouter>
-            
+                <Header/>
                 <Routes>
                     <Route path="/" element={<Home/>}/>
                     <Route path="/aboutus" element={<Aboutus/>}/>

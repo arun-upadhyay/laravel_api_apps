@@ -21,6 +21,6 @@
   <!-- React DOM Node -->
   <div id="app"></div>
 
-  <script type="text/javascript" src="{{mix('js/app.js')}}"></script>
+  <script type="text/javascript" src="{{mix('js/app.js')}}" defer></script>
 </body>
 </html>

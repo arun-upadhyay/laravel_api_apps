@@ -9067,6 +9067,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Register)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
@@ -9101,6 +9102,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Register = /*#__PURE__*/function (_React$Component) {
   _inherits(Register, _React$Component);
 
@@ -9112,6 +9114,9 @@ var Register = /*#__PURE__*/function (_React$Component) {
     _classCallCheck(this, Register);
 
     _this = _super.call(this, props);
+    _this.state = {
+      isRegister: 0
+    };
     _this.state = {
       registerName: '',
       registerUsername: '',
@@ -9132,6 +9137,8 @@ var Register = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "handleRegisterSubmit",
     value: function handleRegisterSubmit(event) {
+      var _this2 = this;
+
       event.preventDefault();
       var data = new FormData();
       data.append("name", this.state.name);
@@ -9145,13 +9152,18 @@ var Register = /*#__PURE__*/function (_React$Component) {
       }).then(function (response) {
         return response.text();
       }).then(function (result) {
-        console.log("I am here ----------");
-        console.log(result);
-        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("redirect", {
-          to: "/login"
+        // register an event to be redirected
+        _this2.setState({
+          isRegister: 1
         });
+
+        console.log(result);
       })["catch"](function (error) {
         return console.log('error', error);
+      });
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Navigate, {
+        replace: true,
+        to: "/login"
       });
     }
   }, {
@@ -9159,6 +9171,7 @@ var Register = /*#__PURE__*/function (_React$Component) {
     value: function handleInputChange(event) {
       event.preventDefault();
       var obj = {
+        registerName: this.state.registerName,
         registerUsername: this.state.registerUsername,
         registerEmail: this.state.registerEmail,
         registerPassword: this.state.registerPassword,
@@ -9171,10 +9184,29 @@ var Register = /*#__PURE__*/function (_React$Component) {
   }, {
     key: "render",
     value: function render() {
+      if (this.state.isRegister === 1) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_2__.Navigate, {
+          replace: true,
+          to: "/login"
+        });
+      }
+
       return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
         className: "col-md-4 ml-4",
         children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("form", {
           children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
+            className: "form-outline mb-4",
+            children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
+              type: "name",
+              name: "registerName",
+              id: "register_name",
+              className: "form-control",
+              onChange: this.handleInputChange.bind(this)
+            }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("label", {
+              className: "form-label",
+              children: "Name"
+            })]
+          }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsxs)("div", {
             className: "form-outline mb-4",
             children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("input", {
               type: "username",

@@ -1,10 +1,15 @@
 import * as React from "react";
-import {redirect} from 'react-router-dom'
+import {Navigate} from 'react-router-dom'
+import {useState} from "react";
 
 
 export default class Register extends React.Component {
+
     constructor(props) {
         super(props);
+        this.state = {
+            isRegister: 0
+        }
         this.state = {
             registerName: '',
             registerUsername: '',
@@ -12,7 +17,6 @@ export default class Register extends React.Component {
             registerPassword: '',
             registerConfirmPassword: ''
         }
-
     }
 
     componentDidMount() {
@@ -36,16 +40,19 @@ export default class Register extends React.Component {
         })
             .then(response => response.text())
             .then(result => {
-                console.log("I am here ----------")
-                console.log(result)
-                return <redirect to='/login'/>
+                // register an event to be redirected
+                this.setState({isRegister: 1})
+                console.log(result);
             })
             .catch(error => console.log('error', error));
+
+        return <Navigate replace to="/login"/>;
     }
 
     handleInputChange(event) {
         event.preventDefault();
         let obj = {
+            registerName: this.state.registerName,
             registerUsername: this.state.registerUsername,
             registerEmail: this.state.registerEmail,
             registerPassword: this.state.registerPassword,
@@ -58,10 +65,19 @@ export default class Register extends React.Component {
 
 
     render() {
+
+        if (this.state.isRegister === 1) {
+            return <Navigate replace to="/login"/>;
+        }
+
         return (
 
             <div className="col-md-4 ml-4">
                 <form>
+                    <div className="form-outline mb-4">
+                        <input type="name" name="registerName" id="register_name" className="form-control" onChange={this.handleInputChange.bind(this)}/>
+                        <label className="form-label">Name</label>
+                    </div>
                     <div className="form-outline mb-4">
                         <input type="username" name="registerUsername" id="register_username" className="form-control" onChange={this.handleInputChange.bind(this)}/>
                         <label className="form-label">Username</label>

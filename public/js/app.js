@@ -8986,7 +8986,6 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
-
 var Login = /*#__PURE__*/function (_React$Component) {
   _inherits(Login, _React$Component);
 
@@ -9001,7 +9000,7 @@ var Login = /*#__PURE__*/function (_React$Component) {
   _createClass(Login, [{
     key: "handleRegisterClick",
     value: function handleRegisterClick() {
-      console.log("Register button clicked");
+      var user = new User();
     }
   }, {
     key: "render",
@@ -9101,6 +9100,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Register = /*#__PURE__*/function (_React$Component) {
   _inherits(Register, _React$Component);
 
@@ -9113,6 +9113,7 @@ var Register = /*#__PURE__*/function (_React$Component) {
 
     _this = _super.call(this, props);
     _this.state = {
+      registerName: '',
       registerUsername: '',
       registerEmail: '',
       registerPassword: '',
@@ -9132,7 +9133,26 @@ var Register = /*#__PURE__*/function (_React$Component) {
     key: "handleRegisterSubmit",
     value: function handleRegisterSubmit(event) {
       event.preventDefault();
-      console.log(this.state);
+      var data = new FormData();
+      data.append("name", this.state.name);
+      data.append("username", this.state.registerUsername);
+      data.append("password", this.state.password);
+      data.append("email", this.state.registerEmail);
+      fetch("api/auth/register", {
+        method: 'POST',
+        body: data,
+        redirect: 'follow'
+      }).then(function (response) {
+        return response.text();
+      }).then(function (result) {
+        console.log("I am here ----------");
+        console.log(result);
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("redirect", {
+          to: "/login"
+        });
+      })["catch"](function (error) {
+        return console.log('error', error);
+      });
     }
   }, {
     key: "handleInputChange",

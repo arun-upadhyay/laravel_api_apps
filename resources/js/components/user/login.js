@@ -1,13 +1,11 @@
 import * as React from "react";
 import {Link} from "react-router-dom";
-import {u} from 'react-router-dom';
+
 
 export default class Login extends React.Component {
 
     handleRegisterClick() {
-
-        console.log("Register button clicked")
-
+        const user = new User
     }
 
     render() {

@@ -1,32 +1,50 @@
 import * as React from "react";
+import {redirect} from 'react-router-dom'
+
 
 export default class Register extends React.Component {
     constructor(props) {
         super(props);
-
         this.state = {
+            registerName: '',
             registerUsername: '',
             registerEmail: '',
             registerPassword: '',
             registerConfirmPassword: ''
         }
+
     }
 
     componentDidMount() {
     }
+
 
     /**
      * Register user
      */
     handleRegisterSubmit(event) {
         event.preventDefault();
-        console.log(this.state)
-
+        let data = new FormData();
+        data.append("name", this.state.name);
+        data.append("username", this.state.registerUsername);
+        data.append("password", this.state.password);
+        data.append("email", this.state.registerEmail);
+        fetch("api/auth/register", {
+            method: 'POST',
+            body: data,
+            redirect: 'follow'
+        })
+            .then(response => response.text())
+            .then(result => {
+                console.log("I am here ----------")
+                console.log(result)
+                return <redirect to='/login'/>
+            })
+            .catch(error => console.log('error', error));
     }
 
     handleInputChange(event) {
         event.preventDefault();
-
         let obj = {
             registerUsername: this.state.registerUsername,
             registerEmail: this.state.registerEmail,

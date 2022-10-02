@@ -1,5 +1,3 @@
-import * as constants from '../reducers/Action/LoginActionType';
-
 const initialState = {
     auth: {loggedIn: false}
 

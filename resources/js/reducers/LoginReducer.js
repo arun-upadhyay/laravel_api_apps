@@ -1,18 +1,22 @@
-const initialState = {
-    auth: {loggedIn: false}
-
-};
-const loginReducer = (state = initialState, actionType) => {
+const loginReducer = (state = {authLogIn: false}, actionType) => {
+    console.log(actionType.type)
+    console.log(state)
     switch (actionType.type) {
-        case 'LOG_IN':
-            return {...state, auth: {loggedIn: true}};
+        case 'LOGIN':
+            return {
+                authLogIn: true
+            }
+
             break;
-        case 'LOG_OUT':
-            return {...state, auth: {loggedIn: false}};
+        case 'LOGOUT':
+            return {
+                authLogIn: false
+            }
             break;
+
         default:
             return state;
-            break;
+
 
     }
 }

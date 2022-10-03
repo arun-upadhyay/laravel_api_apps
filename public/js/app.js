@@ -8772,7 +8772,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Home)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _user_logout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../user/logout */ "./resources/js/components/user/logout.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8799,6 +8800,7 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Home = /*#__PURE__*/function (_React$Component) {
   _inherits(Home, _React$Component);
 
@@ -8811,17 +8813,10 @@ var Home = /*#__PURE__*/function (_React$Component) {
   }
 
   _createClass(Home, [{
-    key: "handleSubmit",
-    value: function handleSubmit(event) {// const navigate = useNavigate();
-      // navigate("layout", {replace: true});
-    }
-  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("div", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_1__.jsx)("h1", {
-          children: "I am on home page Home Page"
-        })
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_user_logout__WEBPACK_IMPORTED_MODULE_1__.Logout, {})
       });
     }
   }]);
@@ -8937,6 +8932,9 @@ var registerRoute = function registerRoute() {
         }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
           path: "/login",
           element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_user_login__WEBPACK_IMPORTED_MODULE_6__["default"], {})
+        }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_9__.Route, {
+          path: "/logout",
+          element: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_7__.jsx)(_user_login__WEBPACK_IMPORTED_MODULE_6__["default"], {})
         })]
       })]
     })
@@ -8960,7 +8958,7 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _reducers_Action_ActionTypeLogin__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../reducers/Action/ActionTypeLogin */ "./resources/js/reducers/Action/ActionTypeLogin.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
-/* harmony import */ var _http_loginService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../http/loginService */ "./resources/js/http/loginService.js");
+/* harmony import */ var _http_userService__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../http/userService */ "./resources/js/http/userService.js");
 /* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _slicedToArray(arr, i) { return _arrayWithHoles(arr) || _iterableToArrayLimit(arr, i) || _unsupportedIterableToArray(arr, i) || _nonIterableRest(); }
 
@@ -8979,78 +8977,6 @@ function _arrayWithHoles(arr) { if (Array.isArray(arr)) return arr; }
 
 
 
-
-/**
- export default class Login extends React.Component {
-
-    constructor(props) {
-        super(props);
-        this.state = {
-            login: {
-                loginUsername: '',
-                loginPassword: ''
-            }
-        }
-
-    }
-
-    handleChangeEvent(event) {
-        event.preventDefault();
-        let obj = {
-            loginUsername: this.state.login.loginUsername,
-            loginPassword: this.state.login.loginPassword
-        }
-        console.log(obj)
-        const field = event.target.name;
-        const value = event.target.value;
-        this.setState({
-            login: {
-                ...obj, [field]: value
-            }
-        })
-    }
-
-    LoginView = () => {
-        const loggedIn = useSelector((state) => state.auth.loggedIn);
-        const dispatch = useDispatch();
-
-        if (loggedIn) {
-            return <Navigate replace to="/"/>;
-        }
-
-        return (<div className="col-md-4 ml-4">
-            <form>
-                <div className="form-outline mb-4">
-                    <input type="email" name="loginUsername" id="login_email" className="form-control" onChange={this.handleChangeEvent.bind(this)}/>
-                    <label className="form-label" htmlFor="form2Example1">Email address</label>
-                </div>
-
-                <div className="form-outline mb-4">
-                    <input type="password" name="loginPassword" id="login_password" className="form-control" onChange={this.handleChangeEvent.bind(this)}/>
-                    <label className="form-label" htmlFor="form2Example2">Password</label>
-                </div>
-
-                <button type="button" className="btn btn-primary btn-block mb-4" onClick={this.handleRegisterClick.bind(this)}>Sign in</button>
-                <div className="text-center">
-                    <p>Not a member?
-                        <Link to={`/register`}>Register</Link>
-                    </p>
-                </div>
-            </form>
-        </div>);
-    }
-
-    handleRegisterClick() {
-        const username = this.state.login.loginUsername;
-        const password = this.state.login.loginPassword;
-    }
-
-    render() {
-       return <div>H1sdkfj</div>
-
-    }
-}
- **/
 
 
 
@@ -9089,9 +9015,20 @@ function Login() {
   function handleSubmit() {
     var username = loginUsername;
     var password = loginPassword;
-    var result = _http_loginService__WEBPACK_IMPORTED_MODULE_3__["default"].login(username, password); //dispatch(userLogin());
+    _http_userService__WEBPACK_IMPORTED_MODULE_3__["default"].login(username, password).then(function (response) {
+      return response.text();
+    }).then(function (result) {
+      var obj = JSON.parse(result);
 
-    console.log("username" + result.text());
+      if (obj.access_token) {
+        localStorage.setItem('accessToken', obj.access_token);
+        localStorage.setItem('expiresIn', obj.expires_in);
+        localStorage.setItem('authUser', obj.user.name);
+        dispatch((0,_reducers_Action_ActionTypeLogin__WEBPACK_IMPORTED_MODULE_1__.userLogin)());
+      }
+    })["catch"](function (error) {
+      return console.log('error', error);
+    });
   }
 
   return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.Fragment, {
@@ -9133,6 +9070,55 @@ function Login() {
         })]
       })
     })
+  });
+}
+
+/***/ }),
+
+/***/ "./resources/js/components/user/logout.js":
+/*!************************************************!*\
+  !*** ./resources/js/components/user/logout.js ***!
+  \************************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "Logout": () => (/* binding */ Logout)
+/* harmony export */ });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var _http_userService__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../../http/userService */ "./resources/js/http/userService.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
+
+
+
+function Logout() {
+  function fireLogout() {
+    _http_userService__WEBPACK_IMPORTED_MODULE_1__["default"].logout().then(function (response) {
+      return response.text();
+    }).then(function (result) {
+      var obj = JSON.parse(result);
+
+      if (obj.message == "User successfully signed out") {
+        localStorage.clear();
+      }
+    })["catch"](function (error) {
+      return console.log('error', error);
+    });
+  }
+
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+    children: [/*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsxs)("div", {
+      children: ["Welcome ", /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("b", {
+        children: localStorage.getItem("authUser")
+      })]
+    }), /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("button", {
+        onClick: fireLogout,
+        children: "Logout"
+      })
+    })]
   });
 }
 
@@ -9352,10 +9338,10 @@ var Register = /*#__PURE__*/function (_React$Component) {
 
 /***/ }),
 
-/***/ "./resources/js/http/loginService.js":
-/*!*******************************************!*\
-  !*** ./resources/js/http/loginService.js ***!
-  \*******************************************/
+/***/ "./resources/js/http/userService.js":
+/*!******************************************!*\
+  !*** ./resources/js/http/userService.js ***!
+  \******************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 "use strict";
@@ -9369,41 +9355,63 @@ function _defineProperties(target, props) { for (var i = 0; i < props.length; i+
 
 function _createClass(Constructor, protoProps, staticProps) { if (protoProps) _defineProperties(Constructor.prototype, protoProps); if (staticProps) _defineProperties(Constructor, staticProps); Object.defineProperty(Constructor, "prototype", { writable: false }); return Constructor; }
 
-var LoginService = /*#__PURE__*/function () {
-  function LoginService() {
-    _classCallCheck(this, LoginService);
+var UserService = /*#__PURE__*/function () {
+  function UserService() {
+    _classCallCheck(this, UserService);
   }
 
-  _createClass(LoginService, [{
+  _createClass(UserService, [{
     key: "login",
     value: function login(username, password) {
-      var formdata = new FormData();
-      formdata.append("username", username);
-      formdata.append("password", password);
-      fetch("api/auth/login", {
+      var form_data = new FormData();
+      form_data.append("username", username);
+      form_data.append("password", password);
+      return fetch("api/auth/login", {
         method: 'POST',
-        body: formdata,
+        body: form_data,
         redirect: 'follow'
-      }).then(function (response) {
-        return response.text();
-      }).then(function (result) {
-        var obj = JSON.parse(result);
-
-        if (obj.access_token) {
-          localStorage.setItem('accessToken', obj.access_token);
-          localStorage.setItem('expiresIn', obj.expires_in);
-          localStorage.setItem('authUser', obj.user.name);
-        }
-      })["catch"](function (error) {
-        return console.log('error', error);
       });
+    }
+  }, {
+    key: "logout",
+    value: function logout() {
+      /**
+       *
+       */
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + localStorage.getItem('accessToken'));
+      myHeaders.append("X-CSRF-TOKEN", this.getCookie('CSRF-TOKEN'));
+      return fetch("api/auth/logout", {
+        method: 'POST',
+        headers: myHeaders,
+        redirect: 'follow'
+      });
+    }
+  }, {
+    key: "getCookie",
+    value: function getCookie(name) {
+      if (!document.cookie) {
+        return null;
+      }
+
+      var xsrfCookies = document.cookie.split(';').map(function (c) {
+        return c.trim();
+      }).filter(function (c) {
+        return c.startsWith(name + '=');
+      });
+
+      if (xsrfCookies.length === 0) {
+        return null;
+      }
+
+      return decodeURIComponent(xsrfCookies[0].split('=')[1]);
     }
   }]);
 
-  return LoginService;
+  return UserService;
 }();
 
-/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new LoginService());
+/* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new UserService());
 
 /***/ }),
 

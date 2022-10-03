@@ -17,6 +17,7 @@ export const registerRoute = () => {
                 <Route path="/contactus" element={<Contact/>}/>
                 <Route path="/register" element={<Register/>}/>
                 <Route path="/login" element={<Login/>}/>
+                <Route path="/logout" element={<Login/>}/>
             </Routes>
         </BrowserRouter>
     </>);

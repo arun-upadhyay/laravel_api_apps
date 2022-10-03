@@ -1,13 +1,23 @@
 class LoginService {
     login(username, password) {
-        let form_data = new FormData();
-        form_data.append("username", username);
-        form_data.append("password", password);
-        return fetch("api/auth/login", {
+        let formdata = new FormData();
+        formdata.append("username", username);
+        formdata.append("password", password);
+        fetch("api/auth/login", {
             method: 'POST',
-            body: form_data,
+            body: formdata,
             redirect: 'follow'
-        });
+        })
+            .then(response => response.text())
+            .then(result => {
+                const obj = JSON.parse(result);
+                if (obj.access_token) {
+                    localStorage.setItem('accessToken', obj.access_token);
+                    localStorage.setItem('expiresIn', obj.expires_in);
+                    localStorage.setItem('authUser', obj.user.name);
+                }
+            })
+            .catch(error => console.log('error', error));
     }
 }
 

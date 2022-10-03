@@ -1,9 +1,10 @@
 import * as React from "react";
 import {Link, Navigate} from "react-router-dom";
-import user from "../../models/user";
 import {userLogin, userLogout} from "../../reducers/Action/ActionTypeLogin";
 import {useSelector, useDispatch} from "react-redux";
 import {useState} from "react";
+import loginService, {LoginService} from '../../http/loginService';
+
 
 /**
  export default class Login extends React.Component {
@@ -78,34 +79,52 @@ import {useState} from "react";
  **/
 
 export default function Login() {
+
     const dispatch = useDispatch();
     const loggedIn = useSelector((state) => state.loginReducer.authLogIn);
-    console.log("testing" + loggedIn)
+    const [loginUsername, setLoginUsername] = useState('');
+    const [loginPassword, setLoginPassword] = useState('');
 
     if (loggedIn) {
         return <Navigate replace to="/"/>;
     }
 
+    function handleUsernameChange(event) {
+        setLoginUsername(event.target.value);
+    }
+
+    function handlePasswordChange(event) {
+        setLoginPassword(event.target.value);
+    }
+
+    function handleSubmit() {
+        const username = loginUsername;
+        const password = loginPassword;
+        const result = loginService.login(username, password);
+        //dispatch(userLogin());
+
+        console.log("username" + result.text());
+
+
+
+    }
+
     return (
 
         <>
-
             <div className="col-md-4 ml-4">
-                <h1> value = {loggedIn}</h1>
                 <form>
                     <div className="form-outline mb-4">
-                        <input type="email" name="loginUsername" id="login_email" className="form-control"/>
+                        <input type="email" name="loginUsername" id="login_email" className="form-control" on onChange={handleUsernameChange}/>
                         <label className="form-label" htmlFor="form2Example1">Email address</label>
                     </div>
 
                     <div className="form-outline mb-4">
-                        <input type="password" name="loginPassword" id="login_password" className="form-control"/>
+                        <input type="password" name="loginPassword" id="login_password" className="form-control" onChange={handlePasswordChange}/>
                         <label className="form-label" htmlFor="form2Example2">Password</label>
                     </div>
 
-                    <button type="button" className="btn btn-primary btn-block mb-4" onClick={() => {
-                        dispatch(userLogin())
-                    }}>Sign in
+                    <button type="button" className="btn btn-primary btn-block mb-4" onClick={handleSubmit}>Sign in
                     </button>
                 </form>
             </div>

@@ -8772,8 +8772,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */   "default": () => (/* binding */ Home)
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+/* harmony import */ var react_router_dom__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router/dist/index.js");
 /* harmony import */ var _user_logout__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../user/logout */ "./resources/js/components/user/logout.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _http_userService__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../http/userService */ "./resources/js/http/userService.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -8801,22 +8803,56 @@ function _getPrototypeOf(o) { _getPrototypeOf = Object.setPrototypeOf ? Object.g
 
 
 
+
 var Home = /*#__PURE__*/function (_React$Component) {
   _inherits(Home, _React$Component);
 
   var _super = _createSuper(Home);
 
-  function Home() {
+  function Home(props) {
+    var _this;
+
     _classCallCheck(this, Home);
 
-    return _super.apply(this, arguments);
+    _this = _super.call(this, props);
+    _this.state = {
+      shouldLogout: false
+    };
+    return _this;
   }
 
   _createClass(Home, [{
+    key: "componentDidMount",
+    value: function componentDidMount() {
+      var _this2 = this;
+
+      _http_userService__WEBPACK_IMPORTED_MODULE_2__["default"].isTokenValid().then(function (response) {
+        return response.text();
+      }).then(function (result) {
+        var obj = JSON.parse(result);
+        console.log(obj);
+      })["catch"](function (error) {
+        localStorage.clear();
+
+        _this2.setState({
+          shouldLogout: true
+        });
+
+        console.log('error', error);
+      });
+    }
+  }, {
     key: "render",
     value: function render() {
-      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)("div", {
-        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_2__.jsx)(_user_logout__WEBPACK_IMPORTED_MODULE_1__.Logout, {})
+      if (this.state.shouldLogout) {
+        return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_4__.Navigate, {
+          replace: true,
+          to: "/login"
+        });
+      }
+
+      return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)("div", {
+        children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_3__.jsx)(_user_logout__WEBPACK_IMPORTED_MODULE_1__.Logout, {})
       });
     }
   }]);
@@ -9380,31 +9416,25 @@ var UserService = /*#__PURE__*/function () {
        */
       var myHeaders = new Headers();
       myHeaders.append("Authorization", "Bearer " + localStorage.getItem('accessToken'));
-      myHeaders.append("X-CSRF-TOKEN", this.getCookie('CSRF-TOKEN'));
       return fetch("api/auth/logout", {
         method: 'POST',
+        credentials: "same-origin",
         headers: myHeaders,
         redirect: 'follow'
       });
     }
   }, {
-    key: "getCookie",
-    value: function getCookie(name) {
-      if (!document.cookie) {
-        return null;
-      }
-
-      var xsrfCookies = document.cookie.split(';').map(function (c) {
-        return c.trim();
-      }).filter(function (c) {
-        return c.startsWith(name + '=');
+    key: "isTokenValid",
+    value: function isTokenValid() {
+      console.log("isTokenValid");
+      var myHeaders = new Headers();
+      myHeaders.append("Authorization", "Bearer " + localStorage.getItem('accessToken'));
+      return fetch("api/auth/validate", {
+        method: 'POST',
+        credentials: "same-origin",
+        headers: myHeaders,
+        redirect: 'follow'
       });
-
-      if (xsrfCookies.length === 0) {
-        return null;
-      }
-
-      return decodeURIComponent(xsrfCookies[0].split('=')[1]);
     }
   }]);
 

@@ -16,26 +16,25 @@ class UserService {
          */
         let myHeaders = new Headers();
         myHeaders.append("Authorization", "Bearer " + localStorage.getItem('accessToken'));
-        myHeaders.append("X-CSRF-TOKEN", this.getCookie('CSRF-TOKEN'));
         return fetch("api/auth/logout", {
             method: 'POST',
+            credentials: "same-origin",
             headers: myHeaders,
             redirect: 'follow'
         });
     }
 
-    getCookie(name) {
-        if (!document.cookie) {
-            return null;
-        }
-        const xsrfCookies = document.cookie.split(';')
-            .map(c => c.trim())
-            .filter(c => c.startsWith(name + '='));
+    isTokenValid() {
+        console.log("isTokenValid");
 
-        if (xsrfCookies.length === 0) {
-            return null;
-        }
-        return decodeURIComponent(xsrfCookies[0].split('=')[1]);
+        let myHeaders = new Headers();
+        myHeaders.append("Authorization", "Bearer " + localStorage.getItem('accessToken'));
+        return fetch("api/auth/validate", {
+            method: 'POST',
+            credentials: "same-origin",
+            headers: myHeaders,
+            redirect: 'follow'
+        });
     }
 }
 

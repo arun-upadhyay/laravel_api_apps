@@ -9,7 +9,6 @@ export function Logout() {
                 const obj = JSON.parse(result);
                 if (obj.message == "User successfully signed out") {
                     localStorage.clear();
-
                 }
             })
             .catch(error => console.log('error', error));

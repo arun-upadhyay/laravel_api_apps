@@ -40,6 +40,14 @@ class AuthController extends Controller
     }
 
     /**
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function isValidToken()
+    {
+        return response()->json(['valid' => auth()->check()]);
+    }
+
+    /**
      * Register a User.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -101,7 +109,6 @@ class AuthController extends Controller
      * Get the token array structure.
      *
      * @param string $token
-     *
      * @return \Illuminate\Http\JsonResponse
      */
     protected function createNewToken($token)

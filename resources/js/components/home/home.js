@@ -19,7 +19,6 @@ class Home extends React.Component {
             .then(result => {
                 const obj = JSON.parse(result)
                 console.log(obj);
-
             })
             .catch(error => {
                 localStorage.clear();
@@ -27,8 +26,6 @@ class Home extends React.Component {
                 this.props.dispatch(userLogout());
                 console.log('error', error)
             });
-
-
     }
 
     render() {

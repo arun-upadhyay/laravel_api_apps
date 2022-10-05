@@ -4,6 +4,7 @@ import {createStore} from "redux";
 import {Provider} from 'react-redux';
 import {rootReducer} from "../reducers/registration/reducerRegistration";
 import {registerRoute} from "./routes/registerRoute";
+import Test from "./test";
 
 /**
  * Redux store created
@@ -15,7 +16,8 @@ function Root() {
     return (
         <div className="container">
             <Provider store={store}>
-                {registerRoute()}
+                {/*{registerRoute()}*/}
+                <Test/>
             </Provider>
         </div>
     );
@@ -26,6 +28,7 @@ if (document.getElementById('app')) {
     ReactDOM.render(
         <Provider store={store}>
             < Root/>
+
         </Provider>
         , document.getElementById('app'));
 }

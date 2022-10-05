@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import {applyMiddleware, createStore} from "redux";
 import {Provider} from 'react-redux';
 import {rootReducer} from "../reducers/registration/reducerRegistration";
-import {registerRoute} from "./routes/registerRoute";
+import RegisterRoute from "./routes/registerRoute";
 
 /**
  * Redux store created
@@ -15,7 +15,7 @@ function Root() {
     return (
         <div className="container">
             <Provider store={store}>
-                {registerRoute()}
+                <RegisterRoute/>
             </Provider>
         </div>
     );

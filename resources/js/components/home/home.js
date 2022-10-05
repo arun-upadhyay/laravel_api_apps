@@ -13,12 +13,12 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        console.log("test" + this.props.authLogIn)
         UserService.isTokenValid()
             .then(response => response.text())
             .then(result => {
                 const obj = JSON.parse(result)
                 console.log(obj);
+
             })
             .catch(error => {
                 localStorage.clear();
@@ -29,7 +29,6 @@ class Home extends React.Component {
     }
 
     render() {
-        console.log("testing arun" + this.props.authLogIn)
         if (!this.props.authLogIn) {
             return <Navigate replace to="/login"/>;
         }
@@ -40,7 +39,6 @@ class Home extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-    console.dir(state);
     return {authLogIn: state.loginReducer.authLogIn};
 };
 export default connect(mapStateToProps)(Home); // connect wrapper function in use

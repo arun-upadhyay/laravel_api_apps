@@ -3,16 +3,13 @@ import {Navigate, useNavigate} from "react-router-dom";
 import {Logout} from "../user/logout";
 import UserService from '../../http/userService';
 import {connect} from 'react-redux';
+import {userLogout} from "../../reducers/Action/ActionTypeLogin";
 
 
 class Home extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = {
-            shouldLogout: false
-        }
-
     }
 
     componentDidMount() {
@@ -20,32 +17,33 @@ class Home extends React.Component {
         UserService.isTokenValid()
             .then(response => response.text())
             .then(result => {
-                const obj = JSON.parse(result);
+                const obj = JSON.parse(result)
                 console.log(obj);
+
             })
             .catch(error => {
                 localStorage.clear();
                 this.setState({shouldLogout: true})
+                this.props.dispatch(userLogout());
                 console.log('error', error)
             });
 
 
     }
 
-
     render() {
-        if (this.state.shouldLogout) {
+        console.log("testing arun" + this.props.authLogIn)
+        if (!this.props.authLogIn) {
             return <Navigate replace to="/login"/>;
         }
-
         return (<div>
-            {/*<h1> testing {this.props.authLogIn}</h1>*/}
-            {/*<h1> testing again {this.state.shouldLogout}</h1>*/}
             <Logout/>
         </div>);
     }
 }
+
 const mapStateToProps = (state) => {
-    return {authLogIn: state.authLogIn};
+    console.dir(state);
+    return {authLogIn: state.loginReducer.authLogIn};
 };
 export default connect(mapStateToProps)(Home); // connect wrapper function in use

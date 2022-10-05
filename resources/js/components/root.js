@@ -1,10 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import {createStore} from "redux";
+import {applyMiddleware, createStore} from "redux";
 import {Provider} from 'react-redux';
 import {rootReducer} from "../reducers/registration/reducerRegistration";
 import {registerRoute} from "./routes/registerRoute";
-import Test from "./test";
 
 /**
  * Redux store created
@@ -16,8 +15,7 @@ function Root() {
     return (
         <div className="container">
             <Provider store={store}>
-                {/*{registerRoute()}*/}
-                <Test/>
+                {registerRoute()}
             </Provider>
         </div>
     );
@@ -26,9 +24,6 @@ function Root() {
 export default Root;
 if (document.getElementById('app')) {
     ReactDOM.render(
-        <Provider store={store}>
-            < Root/>
-
-        </Provider>
+        < Root/>
         , document.getElementById('app'));
 }

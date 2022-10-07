@@ -12,9 +12,6 @@ export default function Login() {
     const [loginUsername, setLoginUsername] = useState('');
     const [loginPassword, setLoginPassword] = useState('');
 
-    if (loggedIn) {
-        return <Navigate replace to="/"/>;
-    }
 
     function handleUsernameChange(event) {
         setLoginUsername(event.target.value);
@@ -32,15 +29,19 @@ export default function Login() {
                 if (obj.access_token) {
                     localStorage.setItem('accessToken', obj.access_token);
                     localStorage.setItem('expiresIn', obj.expires_in);
-                    localStorage.setItem('authUser', obj.user.name);
+                    localStorage.setItem('authUser', obj.user.name)
+                    localStorage.setItem('expectedDate', new Date().getTime());
                     dispatch(userLogin());
                 }
             })
             .catch(error => console.log('error', error));
     }
 
-    return (
+    if (!loggedIn) {
+        return <Navigate replace to="/"/>;
+    }
 
+    return (
         <div className="col-md-4 ml-4">
             <form>
                 <div className="form-outline mb-4">

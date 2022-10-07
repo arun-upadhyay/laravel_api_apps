@@ -4,6 +4,7 @@ import {applyMiddleware, createStore} from "redux";
 import {Provider} from 'react-redux';
 import {rootReducer} from "../reducers/registration/reducerRegistration";
 import RegisterRoute from "./routes/registerRoute";
+import {myLogger} from "../middleware/Logger";
 
 /**
  * Redux store created

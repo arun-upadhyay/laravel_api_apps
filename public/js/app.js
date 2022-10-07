@@ -8853,22 +8853,24 @@ var Home = /*#__PURE__*/function (_React$Component) {
     value: function componentDidMount() {
       var _this = this;
 
-      _http_userService__WEBPACK_IMPORTED_MODULE_2__["default"].isTokenValid().then(function (response) {
-        return response.text();
-      }).then(function (result) {
-        var obj = JSON.parse(result);
-        console.log(obj);
-      })["catch"](function (error) {
-        localStorage.clear();
+      if (_http_userService__WEBPACK_IMPORTED_MODULE_2__["default"].shouldCheckForValidToken()) {
+        _http_userService__WEBPACK_IMPORTED_MODULE_2__["default"].isTokenValid().then(function (response) {
+          return response.text();
+        }).then(function (result) {
+          var obj = JSON.parse(result);
+          console.log(obj);
+        })["catch"](function (error) {
+          localStorage.clear();
 
-        _this.setState({
-          shouldLogout: true
+          _this.setState({
+            shouldLogout: true
+          });
+
+          _this.props.dispatch((0,_reducers_Action_ActionTypeLogin__WEBPACK_IMPORTED_MODULE_4__.userLogout)());
+
+          console.log('error', error);
         });
-
-        _this.props.dispatch((0,_reducers_Action_ActionTypeLogin__WEBPACK_IMPORTED_MODULE_4__.userLogout)());
-
-        console.log('error', error);
-      });
+      }
     }
   }, {
     key: "render",
@@ -8912,11 +8914,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export */ });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 /* harmony import */ var react_dom__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
-/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
+/* harmony import */ var redux__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! redux */ "./node_modules/redux/es/redux.js");
 /* harmony import */ var react_redux__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! react-redux */ "./node_modules/react-redux/es/index.js");
 /* harmony import */ var _reducers_registration_reducerRegistration__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../reducers/registration/reducerRegistration */ "./resources/js/reducers/registration/reducerRegistration.js");
 /* harmony import */ var _routes_registerRoute__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./routes/registerRoute */ "./resources/js/components/routes/registerRoute.js");
-/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+/* harmony import */ var _middleware_Logger__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../middleware/Logger */ "./resources/js/middleware/Logger.js");
+/* harmony import */ var react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! react/jsx-runtime */ "./node_modules/react/jsx-runtime.js");
+
 
 
 
@@ -8929,14 +8933,14 @@ __webpack_require__.r(__webpack_exports__);
  */
 
 
-var store = (0,redux__WEBPACK_IMPORTED_MODULE_6__.createStore)(_reducers_registration_reducerRegistration__WEBPACK_IMPORTED_MODULE_3__.rootReducer);
+var store = (0,redux__WEBPACK_IMPORTED_MODULE_7__.createStore)(_reducers_registration_reducerRegistration__WEBPACK_IMPORTED_MODULE_3__.rootReducer);
 
 function Root() {
-  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)("div", {
+  return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)("div", {
     className: "container",
-    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
+    children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(react_redux__WEBPACK_IMPORTED_MODULE_2__.Provider, {
       store: store,
-      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(_routes_registerRoute__WEBPACK_IMPORTED_MODULE_4__["default"], {})
+      children: /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(_routes_registerRoute__WEBPACK_IMPORTED_MODULE_4__["default"], {})
     })
   });
 }
@@ -8944,7 +8948,7 @@ function Root() {
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (Root);
 
 if (document.getElementById('app')) {
-  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_5__.jsx)(Root, {}), document.getElementById('app'));
+  react_dom__WEBPACK_IMPORTED_MODULE_1__.render( /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_6__.jsx)(Root, {}), document.getElementById('app'));
 }
 
 /***/ }),
@@ -9105,13 +9109,6 @@ function Login() {
       loginPassword = _useState4[0],
       setLoginPassword = _useState4[1];
 
-  if (loggedIn) {
-    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Navigate, {
-      replace: true,
-      to: "/"
-    });
-  }
-
   function handleUsernameChange(event) {
     setLoginUsername(event.target.value);
   }
@@ -9130,10 +9127,18 @@ function Login() {
         localStorage.setItem('accessToken', obj.access_token);
         localStorage.setItem('expiresIn', obj.expires_in);
         localStorage.setItem('authUser', obj.user.name);
+        localStorage.setItem('expectedDate', new Date().getTime());
         dispatch((0,_reducers_Action_ActionTypeLogin__WEBPACK_IMPORTED_MODULE_1__.userLogin)());
       }
     })["catch"](function (error) {
       return console.log('error', error);
+    });
+  }
+
+  if (!loggedIn) {
+    return /*#__PURE__*/(0,react_jsx_runtime__WEBPACK_IMPORTED_MODULE_4__.jsx)(react_router_dom__WEBPACK_IMPORTED_MODULE_5__.Navigate, {
+      replace: true,
+      to: "/"
     });
   }
 
@@ -9492,9 +9497,29 @@ var UserService = /*#__PURE__*/function () {
       });
     }
   }, {
+    key: "shouldCheckForValidToken",
+    value: function shouldCheckForValidToken() {
+      console.log("Checking for shouldCheckForValidToken");
+      var start = localStorage.getItem("expectedDate");
+
+      if (start === null || start.trim() === "") {
+        return false;
+      }
+
+      var expireInSeconds = localStorage.getItem("expiresIn");
+
+      if (expireInSeconds === null || expireInSeconds.trim() === "") {
+        return false;
+      }
+
+      var end = new Date().getTime();
+      var diff = end - start;
+      var seconds = Math.floor(diff / 1000 % 60);
+      return seconds > expireInSeconds;
+    }
+  }, {
     key: "isTokenValid",
     value: function isTokenValid() {
-      console.log("isTokenValid");
       var myHeaders = new Headers();
       myHeaders.append("Authorization", "Bearer " + localStorage.getItem('accessToken'));
       return fetch("api/auth/validate", {
@@ -9510,6 +9535,28 @@ var UserService = /*#__PURE__*/function () {
 }();
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = (new UserService());
+
+/***/ }),
+
+/***/ "./resources/js/middleware/Logger.js":
+/*!*******************************************!*\
+  !*** ./resources/js/middleware/Logger.js ***!
+  \*******************************************/
+/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export */ __webpack_require__.d(__webpack_exports__, {
+/* harmony export */   "myLogger": () => (/* binding */ myLogger)
+/* harmony export */ });
+var myLogger = function myLogger(store) {
+  return function (next) {
+    return function (action) {
+      console.log("Adding log message");
+      next(action);
+    };
+  };
+};
 
 /***/ }),
 

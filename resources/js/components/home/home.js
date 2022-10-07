@@ -13,19 +13,20 @@ class Home extends React.Component {
     }
 
     componentDidMount() {
-        UserService.isTokenValid()
-            .then(response => response.text())
-            .then(result => {
-                const obj = JSON.parse(result)
-                console.log(obj);
-
-            })
-            .catch(error => {
-                localStorage.clear();
-                this.setState({shouldLogout: true})
-                this.props.dispatch(userLogout());
-                console.log('error', error)
-            });
+        if (UserService.shouldCheckForValidToken()) {
+            UserService.isTokenValid()
+                .then(response => response.text())
+                .then(result => {
+                    const obj = JSON.parse(result)
+                    console.log(obj);
+                })
+                .catch(error => {
+                    localStorage.clear();
+                    this.setState({shouldLogout: true})
+                    this.props.dispatch(userLogout());
+                    console.log('error', error)
+                });
+        }
     }
 
     render() {

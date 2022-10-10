@@ -69,7 +69,7 @@ export default class Register extends React.Component {
     render() {
 
         if (this.state.isRegister === 1) {
-            return <Navigate replace to="/login"/>;
+            //  return <Navigate replace to="/login"/>;
         }
 
         return (

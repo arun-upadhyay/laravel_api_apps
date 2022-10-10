@@ -18,7 +18,7 @@ export default class RegisterRoute extends React.Component {
         return (
             <BrowserRouter>
                 <Routes>
-                    <Route path="/" element={<Home/>}/>
+                    <Route path="/" element={<Login/>}/>
                     <Route path="/aboutus" element={<Aboutus/>}/>
                     <Route path="/contactus" element={<Contact/>}/>
                     <Route path="/register" element={<Register/>}/>

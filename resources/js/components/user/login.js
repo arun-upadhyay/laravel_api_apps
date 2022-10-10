@@ -37,11 +37,12 @@ export default function Login() {
             .catch(error => console.log('error', error));
     }
 
-    if (loggedIn) {
+    if (loggedIn || UserService.shouldCheckForValidToken()) {
         return <Navigate replace to="/dashboard"/>;
     }
 
     return (
+
         <div className="col-md-4 ml-4">
             <form>
                 <div className="form-outline mb-4">

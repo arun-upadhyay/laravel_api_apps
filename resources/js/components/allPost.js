@@ -6,23 +6,19 @@ export default class AllPost extends Component {
 
     constructor(props) {
         super(props);
-
         this.state = {
             posts: []
         }
     }
 
-    componentDidMount() {
-
-        postService.getAllPost()
-            .then(response => response.text())
-            .then(result => {
-                const obj = JSON.parse(result);
-                console.log("ComponentDidMount");
-                console.log(obj.data);
-                this.setState({posts: obj.data})
-            })
-    }
+    // componentDidMount() {
+    //     // postService.getAllPost()
+    //     //     .then(response => response.text())
+    //     //     .then(result => {
+    //     //         const obj = JSON.parse(result);
+    //     //         this.setState({posts: obj.data})
+    //     //     })
+    // }
 
     render() {
         return (<div>

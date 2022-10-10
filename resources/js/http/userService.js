@@ -25,7 +25,6 @@ class UserService {
     }
 
     shouldCheckForValidToken() {
-        console.log("Checking for shouldCheckForValidToken")
         const start = localStorage.getItem("expectedDate");
         if (start === null || start.trim() === "") {
             return false;
@@ -36,9 +35,8 @@ class UserService {
         }
         const end = new Date().getTime();
         const diff = end - start;
-        const seconds = Math.floor(diff / 1000 % 60);
-        return seconds > expireInSeconds;
-
+        const seconds = Math.floor(diff / 1000);
+        return seconds < expireInSeconds;
     }
 
     isTokenValid() {

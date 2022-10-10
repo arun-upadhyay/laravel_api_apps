@@ -1,6 +1,6 @@
 import * as React from "react";
 import {Navigate} from "react-router-dom";
-import {userLogin} from "../../reducers/Action/ActionTypeLogin";
+import {userLogin, userLogout} from "../../reducers/Action/ActionTypeLogin";
 import {useSelector, useDispatch} from "react-redux";
 import {useState} from "react";
 import UserService from '../../http/userService';

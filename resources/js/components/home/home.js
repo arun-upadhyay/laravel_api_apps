@@ -12,8 +12,10 @@ class Home extends React.Component {
         super(props);
     }
 
+
     componentDidMount() {
         if (UserService.shouldCheckForValidToken()) {
+            console.log("I am here checking for valid token");
             UserService.isTokenValid()
                 .then(response => response.text())
                 .then(result => {

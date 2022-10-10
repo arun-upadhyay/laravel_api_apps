@@ -7,6 +7,7 @@ import Register from "../user/register";
 import React from "react";
 import Login from "../user/login";
 import {Logout} from "../user/logout";
+import Dashboard from "../Dashboard";
 
 export default class RegisterRoute extends React.Component {
     constructor(props) {
@@ -24,6 +25,7 @@ export default class RegisterRoute extends React.Component {
                     <Route path="/register" element={<Register/>}/>
                     <Route path="/login" element={<Login/>}/>
                     <Route path="/logout" element={<Logout/>}/>
+                    <Route path="/dashboard" element={<Dashboard/>}/>
                 </Routes>
             </BrowserRouter>
         );

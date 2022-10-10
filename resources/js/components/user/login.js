@@ -37,8 +37,8 @@ export default function Login() {
             .catch(error => console.log('error', error));
     }
 
-    if (!loggedIn) {
-        return <Navigate replace to="/"/>;
+    if (loggedIn) {
+        return <Navigate replace to="/dashboard"/>;
     }
 
     return (
